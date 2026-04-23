@@ -1,0 +1,1 @@
+data class Note(val noteName : String, var text : String)
