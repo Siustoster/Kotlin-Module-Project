@@ -1,4 +1,4 @@
-data class Archive (val archiveName:String) {
+data class Archive (val name:String) {
     var notesList : ArrayList<Note> = ArrayList()
 
 }
