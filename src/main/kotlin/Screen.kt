@@ -64,9 +64,9 @@ class Screen(val archives: ArrayList<Archive>) {
         var creationObjectType: String = ""
         var creationObjectText: String = ""
         var creationObjectName: String = ""
-        if (screenName == "Архивы")
-            creationObjectType = "архива"
-        else creationObjectType = "заметки"
+        creationObjectType = if (screenName == "Архивы")
+            "архива"
+        else "заметки"
         println("Меню создания $creationObjectType")
         println("Введите название $creationObjectType")
         creationObjectName = Scanner(System.`in`).nextLine()
@@ -77,11 +77,30 @@ class Screen(val archives: ArrayList<Archive>) {
             } else {
                 println("Введите текст заметки: ")
                 creationObjectText = Scanner(System.`in`).nextLine()
-                if (parentNum != null) {
-                    archives[parentNum].notesList.add(Note(creationObjectName, creationObjectText))
-                    showMenu(" архива ${archives[parentNum].name}", archives[parentNum].getChildList(), parentNum)
+                if (creationObjectText.isNotEmpty())
+                    if (parentNum != null) {
+                        archives[parentNum].notesList.add(
+                            Note(
+                                creationObjectName,
+                                creationObjectText
+                            )
+                        )
+                        showMenu(
+                            " архива ${archives[parentNum].name}",
+                            archives[parentNum].getChildList(),
+                            parentNum
+                        )
+                    } else {
+                    }
+                else {
+                    println("Текст $creationObjectType не может быть пустым")
+                    showCreationMenu(screenName, parentNum)
                 }
             }
+        else {
+            println("Название $creationObjectType не может быть пустым")
+            showCreationMenu(screenName, parentNum)
+        }
     }
 
     fun showNoteMenu(note: Note, parentNum: Int?) {
